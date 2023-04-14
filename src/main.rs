@@ -19,6 +19,7 @@ fn main() -> std::io::Result<()> {
             "invalid usage.\nusage: {0} [options] <file>\nuse `{0} -h` for more info.",
             argv[0]
         );
+        exit(1)
     }
 
     if argv.has_any(&["-h", "--help"]) {
