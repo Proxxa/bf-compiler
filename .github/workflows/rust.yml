@@ -19,9 +19,10 @@ jobs:
   testing-outputs:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Build
         run: |
-          cargo build --verbose
+          cargo build --release
           sudo cp ./target/debug/bf-compiler /bin/bf-compiler
       - name: Hello World
         run: |
