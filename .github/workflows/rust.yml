@@ -21,8 +21,8 @@ jobs:
     steps:
       - name: Build
         run: |
-          cargo build --release
-          sudo cp ./target/release/bf-compiler /bin/bf-compiler
+          cargo build --verbose
+          sudo cp ./target/debug/bf-compiler /bin/bf-compiler
       - name: Hello World
         run: |
           echo "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++." > hello-world.bf
