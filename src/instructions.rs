@@ -25,7 +25,7 @@ impl std::fmt::Display for InstructionList {
                     LEFT => "if(++dp>29999)dp=0;",
                     RIGHT => "if(--dp<0)dp=29999;",
                     INC => "d[dp]++;",
-                    DEC => "d[dp]--",
+                    DEC => "d[dp]--;",
                     OUT => "putc((int)d[dp],stdout);fflush(stdout);",
                     IN => r#"if((d[dp]=getc(stdin))<0){exit(1);}"#,
                     LOOP => "while(d[dp]){",
