@@ -1,0 +1,12 @@
+extern void *stdin;
+extern void *stdout;
+void exit(int);
+int getc(void*);
+int putc(int,void*);
+void fflush(void*);
+char d[30000];
+int dp=0;
+int main()
+{
+    {instructions}
+}

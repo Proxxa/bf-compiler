@@ -10,31 +10,20 @@ use std::process::*;
 fn main() -> std::io::Result<()> {
     let argv = arguments::get_args();
 
-    if argv.len() < 1 {
-        panic!("failed to collect args.");
-    }
-
-    if argv.len() < 2 {
-        eprintln!(
-            "invalid usage.\nusage: {0} [options] <file>\nuse `{0} -h` for more info.",
-            argv[0]
-        );
-        exit(1)
+    match argv.len() {
+        ..=0 => panic!("failed to collect args."),
+        1 => {
+            eprintln!(
+                "invalid usage.\nusage: {0} [options] <file>\nuse `{0} -h` for more info.",
+                argv[0]
+            );
+            exit(1)
+        }
+        _ => (),
     }
 
     if argv.has_any(&["-h", "--help"]) {
-        println!(
-            r#"BF COMPILER
-
-USAGE
-{0} [options] <file>
-{0} -h
-
-OPTIONS     ALIASES     DESCRIPTION
-  --help    -h          prints this dialog and exits
-  --output  -o          sets the desired output file"#,
-            argv[0]
-        );
+        println!(include_str!("text_include/help"), argv[0]);
         return Ok(());
     }
 
@@ -85,13 +74,19 @@ OPTIONS     ALIASES     DESCRIPTION
         }
     };
 
-    let echo_child = commands::spawn_pipe_out("echo", [format!(r#"extern void *stdin;extern void *stdout;void exit(int);int getc(void*);int putc(int,void*);void fflush(void*);char d[30000];int dp=0;int main(){{{instructions}}}"#)])
+    let compiler_cmd = "clang";
+
+    let echo_child = commands::spawn_pipe_out(
+        "echo",
+        [include_str!("text_include/c_program_base")
+            .replace("{instructions}", instructions.to_string().as_str())],
+    )
     .unwrap();
 
     let cmd = commands::spawn_pipe_in(
         compiler_cmd,
         [
-            if compiler_cmd == "gcc" { "-xc" } else { "" },
+            "-xc",
             "-",
             "-o",
             format!("{output_path}").as_str(),

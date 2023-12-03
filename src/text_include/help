@@ -1,0 +1,9 @@
+BF COMPILER
+
+USAGE
+{0} [options] <file>
+{0} -h
+
+OPTIONS     ALIASES     DESCRIPTION
+  --help    -h          prints this dialog and exits
+  --output  -o          sets the desired output file
